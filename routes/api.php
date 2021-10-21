@@ -17,3 +17,14 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('items', [\App\Http\Controllers\Api\ItemController::class, 'index']);
+Route::post('items/add', [\App\Http\Controllers\Api\ItemController::class, 'store']);
+Route::put('items/edit/{id}', [\App\Http\Controllers\Api\ItemController::class, 'update']);
+Route::delete('items/delete/{id}', [\App\Http\Controllers\Api\ItemController::class, 'destroy']);
+
+Route::get('orders/{id}', [\App\Http\Controllers\Api\OrderController::class, 'showUserOrder']);
+Route::put('orders/status/{id}', [\App\Http\Controllers\Api\OrderController::class, 'updateStatus']);
+
+Route::get('suppliers', [\App\Http\Controllers\Api\SupplierController::class, 'index']);
+Route::post('suppliers/add', [\App\Http\Controllers\Api\SupplierController::class, 'store']);

@@ -21,6 +21,7 @@ class CreateItemsTable extends Migration
             $table->string('image_path');
             $table->integer('min_item');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
