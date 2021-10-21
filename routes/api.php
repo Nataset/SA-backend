@@ -22,15 +22,21 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('items', [\App\Http\Controllers\Api\ItemController::class, 'index']);
 Route::post('items/add', [\App\Http\Controllers\Api\ItemController::class, 'store']);
 Route::put('items/edit/{id}', [\App\Http\Controllers\Api\ItemController::class, 'update']);
+Route::put('items/supplier/{id}', [\App\Http\Controllers\Api\ItemController::class, 'addSupplierToItem']);
 Route::delete('items/delete/{id}', [\App\Http\Controllers\Api\ItemController::class, 'destroy']);
 
+Route::post('orders/add', [\App\Http\Controllers\Api\OrderController::class, 'store']);
 Route::get('orders/{id}', [\App\Http\Controllers\Api\OrderController::class, 'showUserOrder']);
 Route::put('orders/status/{id}', [\App\Http\Controllers\Api\OrderController::class, 'updateStatus']);
 
 Route::get('suppliers', [\App\Http\Controllers\Api\SupplierController::class, 'index']);
 Route::post('suppliers/add', [\App\Http\Controllers\Api\SupplierController::class, 'store']);
 
-Route::post('upload', [\App\Http\Controllers\Api\UploadController::class, 'upload']);
+Route::post('uploadImage', [\App\Http\Controllers\Api\UploadController::class, 'upload']);
+
+Route::post('restock/add', [\App\Http\Controllers\Api\RestockOrderController::class, 'store']);
+Route::get('restock', [\App\Http\Controllers\Api\RestockOrderController::class, 'showRestockOrder']);
+Route::put('restock/status/{id}', [\App\Http\Controllers\Api\RestockOrderController::class, 'updateStatus']);
 
 Route::group([
 

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOrderRestockTable extends Migration
+class CreateRestockOrderTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateOrderRestockTable extends Migration
      */
     public function up()
     {
-        Schema::create('order_restock', function (Blueprint $table) {
+        Schema::create('restock_orders', function (Blueprint $table) {
             $table->id();
             $table->integer('amount');
             $table->enum('status', ['pending', 'finished']);
@@ -32,6 +32,6 @@ class CreateOrderRestockTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('order_restock');
+        Schema::dropIfExists('restock_orders');
     }
 }
