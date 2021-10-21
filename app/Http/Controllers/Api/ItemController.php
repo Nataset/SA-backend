@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Item;
+use App\Models\Supplier;
 
 class ItemController extends Controller
 {
@@ -44,6 +45,14 @@ class ItemController extends Controller
         session()->flash('message', $item->name . ' succesfully created');
         return $item;
     }
+    
+    public function addSupplierToItem(Request $request, $id){
+        $item = Item::findOrFail($id);
+        $item->suppliers()->attach($request->input('supplier_id'));
+        $item->save();
+        $item = Item::with('suppliers')->find($id);
+        return $item;
+    }
 
     /**
      * Display the specified resource.
@@ -56,9 +65,12 @@ class ItemController extends Controller
         //
     }
     
-    public function showRestockOrder()
+    public function showItemSupplier($id)
     {
-        
+        $supplier = Supplier::whereHas('items', function ($q) use ($id) {
+            $q->where('item_id', $id);
+        })->get();
+        return $supplier;
     }
 
     /**
