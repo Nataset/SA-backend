@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,3 +29,18 @@ Route::put('orders/status/{id}', [\App\Http\Controllers\Api\OrderController::cla
 
 Route::get('suppliers', [\App\Http\Controllers\Api\SupplierController::class, 'index']);
 Route::post('suppliers/add', [\App\Http\Controllers\Api\SupplierController::class, 'store']);
+
+Route::post('upload', [\App\Http\Controllers\Api\UploadController::class, 'upload']);
+
+Route::group([
+
+    'middleware' => 'api',
+    'prefix' => 'auth'
+
+], function ($router) {
+
+    Route::post('login', [AuthController::class, 'login']);
+    Route::post('logout', [AuthController::class, 'logout']);
+    Route::post('register', [AuthController::class, 'register']);
+    Route::post('me', [AuthController::class, 'me']);
+});
