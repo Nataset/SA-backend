@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRestockOrderTable extends Migration
+class CreateRestockOrdersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -19,7 +19,7 @@ class CreateRestockOrderTable extends Migration
             $table->enum('status', ['pending', 'finished']);
             $table->unsignedBigInteger('supplier_id');
             $table->unsignedBigInteger('item_id');
-            $table->foreign('order_id')->references('id')->on('orders');
+            $table->foreign('supplier_id')->references('id')->on('suppliers');
             $table->foreign('item_id')->references('id')->on('items');
             $table->timestamps();
         });

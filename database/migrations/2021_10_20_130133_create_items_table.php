@@ -18,7 +18,7 @@ class CreateItemsTable extends Migration
             $table->string('name');
             $table->integer('amount');
             $table->float('price');
-            $table->string('image_path');
+            $table->string('image_path')->nullable();
             $table->integer('min_item');
             $table->timestamps();
             $table->softDeletes();

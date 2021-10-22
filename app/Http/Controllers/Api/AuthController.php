@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
@@ -40,9 +42,10 @@ class AuthController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'firstname' => 'required|string|between:2,100',
-            'lasetname' => 'required|string|between:2, 100',
+            'lastname' => 'required|string|between:2, 100',
             'email' => 'required|string|email|max:100|unique:users',
-            'password' => 'required|string|min:4|confirmed',
+            'password' => 'required|string|min:4',
+            'address' => 'required|string|min:20'
         ]);
 
         if ($validator->fails()) {
@@ -54,10 +57,16 @@ class AuthController extends Controller
             ['password' => bcrypt($request->password)]
         ));
 
-        return response()->json([
-            'message' => 'User successfully registered',
-            'user' => $user
-        ], 201);
+        // return response()->json([
+        //     'success'=> true,
+        //     'user' => $user,
+        // ], 201);
+        
+        if (!$token = JWTAuth::attempt($validator->validated())) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+        return $this->respondWithToken($token);
+
     }
 
     /**
@@ -86,10 +95,10 @@ class AuthController extends Controller
     protected function respondWithToken($token)
     {
         return response()->json([
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => config('jwt.ttl') * 60,
+            'jwt' => $token,
             'user' => auth()->user()
+            // 'token_type' => 'bearer',
+            // 'expires_in' => config('jwt.ttl') * 60,
         ]);
     }
 
