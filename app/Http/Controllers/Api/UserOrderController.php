@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
-use App\Models\Order;
+use App\Models\UserOrder;
 use App\Http\Controllers\Controller;
 
 class OrderController extends Controller
@@ -26,8 +26,7 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validated();
-        $order = new Order();
-        $order->amount = $request->input('amount');
+        $order = new UserOrder();
         $order->status = 'pending';
         $order->user_id = $request->input('user_id');
         // add loop for attach items to order
@@ -43,9 +42,9 @@ class OrderController extends Controller
     public function showUserOrder(Request $request, $id)
     {
         if ($request->input('status') === 'all') {
-            $orders = Order::with('items')->where('user_id', $id)->orderby('created_at', 'DESC')->get();
+            $orders = UserOrder::with('items')->where('user_id', $id)->orderby('created_at', 'DESC')->get();
         } else {
-            $orders = Order::with('items')->where('user_id', $id)->where('status', $request->input('status'))->orderby('created_at', 'DESC')->get();
+            $orders = UserOrder::with('items')->where('user_id', $id)->where('status', $request->input('status'))->orderby('created_at', 'DESC')->get();
         }
         return $orders;
     }
@@ -59,7 +58,7 @@ class OrderController extends Controller
      */
     public function updateStatus(Request $request, $id)
     {
-        $order = Order::findOrFail($id);
+        $order = UserOrder::findOrFail($id);
         $order->status = $request->input('status');
         $order->save();
 

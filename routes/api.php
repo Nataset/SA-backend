@@ -25,9 +25,9 @@ Route::put('items/edit/{id}', [\App\Http\Controllers\Api\ItemController::class, 
 Route::put('items/supplier/{id}', [\App\Http\Controllers\Api\ItemController::class, 'addSupplierToItem']);
 Route::delete('items/delete/{id}', [\App\Http\Controllers\Api\ItemController::class, 'destroy']);
 
-Route::post('orders/add', [\App\Http\Controllers\Api\OrderController::class, 'store']);
-Route::get('orders/{id}', [\App\Http\Controllers\Api\OrderController::class, 'showUserOrder']);
-Route::put('orders/status/{id}', [\App\Http\Controllers\Api\OrderController::class, 'updateStatus']);
+Route::post('user/orders/add', [\App\Http\Controllers\Api\UserOrderController::class, 'store']);
+Route::get('user/orders/{id}', [\App\Http\Controllers\Api\UserOrderController::class, 'showUserOrder']);
+Route::put('user/orders/status/{id}', [\App\Http\Controllers\Api\UserOrderController::class, 'updateStatus']);
 
 Route::get('suppliers', [\App\Http\Controllers\Api\SupplierController::class, 'index']);
 Route::post('suppliers/add', [\App\Http\Controllers\Api\SupplierController::class, 'store']);

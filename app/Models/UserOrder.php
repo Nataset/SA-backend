@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Order extends Model
+class UserOrder extends Model
 {
     use HasFactory;
     public function user()
@@ -14,6 +14,6 @@ class Order extends Model
     }
     public function items()
     {
-        return $this->belongsToMany(Item::class, 'order_item')->withPivot('amount')->withTimestamps();
+        return $this->belongsToMany(Item::class, 'user_order_item')->withPivot('amount')->withTimestamps();
     }
 }

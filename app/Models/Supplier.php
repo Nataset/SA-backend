@@ -12,4 +12,8 @@ class Supplier extends Model
     {
         return $this->belongsToMany(Item::class, 'item_supplier', 'order_restock')->withTimestamps();
     }
+    public function restockOrders()
+    {
+        return $this->hasMany(RestockOrder::class);
+    }
 }

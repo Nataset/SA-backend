@@ -28,10 +28,9 @@ class RestockOrderController extends Controller
     {
         $validated = $request->validated();
         $order = new RestockOrder();
-        $order->amount = $request->input('amount');
         $order->status = 'pending';
         $order->supplier_id = $request->input('supplier_id');
-        $order->item_id = $request->input('item_id');
+        // add loop for attach items to order
         $order->save();
     }
 
@@ -48,9 +47,9 @@ class RestockOrderController extends Controller
     public function showRestockOrder(Request $request)
     {
         if ($request->input('status') === 'all') {
-            $orders = RestockOrder::with('items')->with('suppliers')->orderby('created_at', 'DESC')->get();
+            $orders = RestockOrder::with('items')->with('supplier')->orderby('created_at', 'DESC')->get();
         } else {
-            $orders = RestockOrder::with('items')->with('suppliers')->where('status', $request->input('status'))->orderby('created_at', 'DESC')->get();
+            $orders = RestockOrder::with('items')->with('supplier')->where('status', $request->input('status'))->orderby('created_at', 'DESC')->get();
         }
         return $orders;
     }
@@ -61,11 +60,8 @@ class RestockOrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-    public function updateStatus(Request $request, $id)
+    
+     public function updateStatus(Request $request, $id)
     {
         $order = RestockOrder::findOrFail($id);
         $order->status = $request->input('status');

@@ -15,12 +15,10 @@ class CreateRestockOrdersTable extends Migration
     {
         Schema::create('restock_orders', function (Blueprint $table) {
             $table->id();
-            $table->integer('amount');
+            $table->float('total_restock_price');
             $table->enum('status', ['pending', 'finished']);
             $table->unsignedBigInteger('supplier_id');
-            $table->unsignedBigInteger('item_id');
             $table->foreign('supplier_id')->references('id')->on('suppliers');
-            $table->foreign('item_id')->references('id')->on('items');
             $table->timestamps();
         });
     }
