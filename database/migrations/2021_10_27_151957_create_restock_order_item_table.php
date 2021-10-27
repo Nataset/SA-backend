@@ -20,7 +20,7 @@ class CreateRestockOrderItemTable extends Migration
             $table->unsignedBigInteger('item_id');
             $table->unsignedBigInteger('restock_order_id');
             $table->foreign('item_id')->references('id')->on('items');
-            $table->foreign('order_id')->references('id')->on('restock_orders');
+            $table->foreign('restock_order_id')->references('id')->on('restock_orders');
             $table->timestamps();
         });
     }

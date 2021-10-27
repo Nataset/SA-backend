@@ -19,7 +19,7 @@ class CreateUserOrderItemTable extends Migration
             $table->unsignedBigInteger('user_order_id');
             $table->unsignedBigInteger('item_id');
             $table->timestamps();
-            $table->foreign('order_id')->references('id')->on('user_orders');
+            $table->foreign('user_order_id')->references('id')->on('user_orders');
             $table->foreign('item_id')->references('id')->on('items');
         });
     }
