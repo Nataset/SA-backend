@@ -16,6 +16,7 @@ class CreateUserOrdersTable extends Migration
         Schema::create('user_orders', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
+            $table->float('total_order_price');
             $table->string('receipt_image')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->enum('status', ['pending', 'confirm', 'shifting', 'finished']);

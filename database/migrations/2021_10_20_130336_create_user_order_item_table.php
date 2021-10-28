@@ -16,6 +16,7 @@ class CreateUserOrderItemTable extends Migration
         Schema::create('user_order_item', function (Blueprint $table) {
             $table->id();
             $table->integer('amount');
+            $table->float('total_item_price');
             $table->unsignedBigInteger('user_order_id');
             $table->unsignedBigInteger('item_id');
             $table->timestamps();

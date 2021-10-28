@@ -30,6 +30,7 @@ class OrderController extends Controller
         $order->status = 'pending';
         $order->user_id = $request->input('user_id');
         // add loop for attach items to order
+
         $order->save();
     }
 
