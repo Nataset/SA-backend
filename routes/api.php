@@ -29,7 +29,7 @@ Route::get('orders/{id}', [App\Http\Controllers\Api\UserOrderController::class, 
 Route::post('user/orders/add', [\App\Http\Controllers\Api\UserOrderController::class, 'store']);
 Route::post('user/orders/{id}', [\App\Http\Controllers\Api\UserOrderController::class, 'showUserOrder']);
 Route::put('user/orders/status/{id}', [\App\Http\Controllers\Api\UserOrderController::class, 'updateStatus']);
-
+Route::post('user/orders/{id}/receiptUpload', [\App\Http\Controllers\Api\UserOrderController::class, 'uploadReceipt']);
 
 Route::get('suppliers', [\App\Http\Controllers\Api\SupplierController::class, 'index']);
 Route::post('suppliers/add', [\App\Http\Controllers\Api\SupplierController::class, 'store']);
