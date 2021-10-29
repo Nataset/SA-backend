@@ -28,7 +28,6 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validated();
         $item = new Item();
         $item->name = $request->input('name');
         $item->amount = $request->input('amount');
@@ -46,8 +45,9 @@ class ItemController extends Controller
         session()->flash('message', $item->name . ' succesfully created');
         return $item;
     }
-    
-    public function addSupplierToItem(Request $request, $id){
+
+    public function addSupplierToItem(Request $request, $id)
+    {
         $item = Item::findOrFail($id);
         $item->suppliers()->attach($request->input('supplier_id'));
         $item->save();
@@ -65,7 +65,7 @@ class ItemController extends Controller
     {
         //
     }
-    
+
     public function showItemSupplier($id)
     {
         $supplier = Supplier::whereHas('items', function ($q) use ($id) {
@@ -83,7 +83,6 @@ class ItemController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validated = $request->validated();
         $item = Item::findOrFail($id);
         $item->name = $request->input('name');
         $item->amount = $request->input('amount');

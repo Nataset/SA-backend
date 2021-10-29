@@ -27,7 +27,6 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validated();
         $supplier = new Supplier();
         $supplier->name = $request->input('name');
         $supplier->save();
