@@ -26,7 +26,8 @@ Route::put('items/edit/{id}', [\App\Http\Controllers\Api\ItemController::class, 
 Route::put('items/supplier/{id}', [\App\Http\Controllers\Api\ItemController::class, 'addSupplierToItem']);
 Route::delete('items/delete/{id}', [\App\Http\Controllers\Api\ItemController::class, 'destroy']);
 
-Route::get('orders/{id}', [App\Http\Controllers\Api\UserOrderController::class, 'index']);
+Route::post('orders/all', [App\Http\Controllers\Api\UserOrderController::class, 'index']);
+Route::get('orders/{id}', [App\Http\Controllers\Api\UserOrderController::class, 'getOrderItem']);
 Route::post('user/orders/add', [\App\Http\Controllers\Api\UserOrderController::class, 'store']);
 Route::post('user/orders/{id}', [\App\Http\Controllers\Api\UserOrderController::class, 'showUserOrder']);
 Route::put('user/orders/status/{id}', [\App\Http\Controllers\Api\UserOrderController::class, 'updateStatus']);
@@ -52,4 +53,5 @@ Route::group([
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('register', [AuthController::class, 'register']);
     Route::post('me', [AuthController::class, 'me']);
+    Route::get('user/{id}', [AuthController::class, 'getUserById']);
 });

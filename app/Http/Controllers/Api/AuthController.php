@@ -61,7 +61,7 @@ class AuthController extends Controller
         //     'success'=> true,
         //     'user' => $user,
         // ], 201);
-        
+
         if (!$token = JWTAuth::attempt($validator->validated())) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
@@ -78,6 +78,12 @@ class AuthController extends Controller
         $user = JWTAuth::user();
 
         return response()->json($user);
+    }
+
+    public function getUserById($id)
+    {
+        $user = User::find($id);
+        return $user;
     }
 
     /**
@@ -100,5 +106,4 @@ class AuthController extends Controller
             // 'expires_in' => config('jwt.ttl') * 60,
         ]);
     }
-
 }

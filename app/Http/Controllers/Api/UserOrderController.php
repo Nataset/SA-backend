@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Models\UserOrder;
+
 use App\Http\Controllers\Controller;
 
 class UserOrderController extends Controller
@@ -13,12 +14,24 @@ class UserOrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index(Request $request)
+    {
+        if ($request->input('status') === 'all') {
+            $orders = UserOrder::with('items')->with('user')->orderby('created_at', 'DESC')->get();
+        } else {
+            $orders = UserOrder::with('items')->with('user')->where('status', $request->input('status'))->orderby('created_at', 'DESC')->get();
+        }
+        return $orders;
+    }
+
+    public function getItemById($id)
     {
         $order = UserOrder::findOrFail($id);
         $order->items;
         return $order;
     }
+
+
 
     /**
      * Store a newly created resource in storage.
