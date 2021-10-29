@@ -19,7 +19,11 @@ class ItemController extends Controller
         $items = Item::get();
         return $items;
     }
-
+    public function getItemById($id)
+    {
+        $item = Item::findOrFail($id);
+        return $item;
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -46,8 +50,9 @@ class ItemController extends Controller
         session()->flash('message', $item->name . ' succesfully created');
         return $item;
     }
-    
-    public function addSupplierToItem(Request $request, $id){
+
+    public function addSupplierToItem(Request $request, $id)
+    {
         $item = Item::findOrFail($id);
         $item->suppliers()->attach($request->input('supplier_id'));
         $item->save();
@@ -65,7 +70,7 @@ class ItemController extends Controller
     {
         //
     }
-    
+
     public function showItemSupplier($id)
     {
         $supplier = Supplier::whereHas('items', function ($q) use ($id) {
@@ -103,7 +108,7 @@ class ItemController extends Controller
         //         }
         //     }
         // }
-        session()->flash('message', $item->name . ' succesfully updated');
+
         return $item;
     }
 
