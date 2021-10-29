@@ -29,6 +29,7 @@ Route::delete('items/delete/{id}', [\App\Http\Controllers\Api\ItemController::cl
 Route::post('orders/all', [App\Http\Controllers\Api\UserOrderController::class, 'index']);
 Route::get('orders/{id}', [App\Http\Controllers\Api\UserOrderController::class, 'getOrderItem']);
 Route::post('user/orders/add', [\App\Http\Controllers\Api\UserOrderController::class, 'store']);
+Route::delete('user/orders/{id}', [\App\Http\Controllers\Api\UserOrderController::class, 'destroy']);
 Route::post('user/orders/{id}', [\App\Http\Controllers\Api\UserOrderController::class, 'showUserOrder']);
 Route::put('user/orders/status/{id}', [\App\Http\Controllers\Api\UserOrderController::class, 'updateStatus']);
 Route::post('user/orders/{id}/receiptUpload', [\App\Http\Controllers\Api\UserOrderController::class, 'uploadReceipt']);

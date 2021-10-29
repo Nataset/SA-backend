@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Models\UserOrder;
-
+use App\Models\Item;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
@@ -25,7 +25,7 @@ class UserOrderController extends Controller
         return $orders;
     }
 
-    public function getItemById($id)
+    public function getOrderItem($id)
     {
         $order = UserOrder::findOrFail($id);
         $order->items;
@@ -54,6 +54,16 @@ class UserOrderController extends Controller
         // add loop for attach items to order
         foreach ($request->input('item') as $x => $val) {
             $total_item_price = $val['buyAmount'] * $val['price'];
+            $item = Item::findOrFail($val['id']);
+            if ($item->amount - $val['buyAmount'] < 0) {
+                UserOrder::destroy($order->id);
+                return response()->json([
+                    'status' => 'fail',
+                    'message' => 'not enough item to buy',
+                ]);
+            }
+            $item->amount = $item->amount - $val['buyAmount'];
+            $item->save();
             $order->items()->attach($val['id'], [
                 'amount' => $val['buyAmount'],
                 'total_item_price' => $total_item_price
@@ -61,7 +71,11 @@ class UserOrderController extends Controller
         }
         $order->save();
         $order->items;
-        return $order;
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $order,
+        ]);
         // get order with items from user
         // $user->find(2)->userOrders()->with('items')->get()
     }
@@ -78,7 +92,7 @@ class UserOrderController extends Controller
             $orders = UserOrder::with('items')->where('user_id', $id)->orderby('created_at', 'DESC')->get();
         } else {
             $orders = UserOrder::with('items')->where('user_id', $id)->where('status', $request->input('status'))->orderby('created_at', 'DESC')->get();
-        }
+        };
         return $orders;
     }
 
@@ -130,6 +144,25 @@ class UserOrderController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $order = UserOrder::findOrFail($id);
+        if ($order->status != 'pending') {
+            return response()->json([
+                'status' => 'fail',
+                'message' => 'ไม่สามารถยกเลิกคำสั้งซื้อในสถานะอื่นนอกจาก pending ได้'
+            ]);
+        }
+        $order->items;
+        foreach ($order->items as $key => $val) {
+            $item = Item::findOrFail($val['id']);
+            $item->amount = $item->amount  + $val['pivot']['amount'];
+            $item->save();
+        };
+        $order->items()->detach();
+        $order->save();
+
+        UserOrder::destroy($id);
+        return response()->json([
+            'status' => 'success',
+        ]);
     }
 }
