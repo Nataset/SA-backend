@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\UserOrder;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class UserOrderController extends Controller
 {
@@ -93,6 +94,32 @@ class UserOrderController extends Controller
         $order = UserOrder::findOrFail($id);
         $order->status = $request->input('status');
         $order->save();
+    }
+
+    public function uploadReceipt(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'image' => 'required|mimes:jpg,jpeg,png|max:1024'
+        ], [
+            'max' => 'รองรับภาพขนาดไม่เกิน :max kilobyte'
+        ]);
+
+        if ($validator->fails()) {
+
+            return response()->json(["status" => 'fail', "error" => $validator->errors()->all()], 400);
+        }
+
+        $upload = new UploadController();
+        $upload_res = $upload->upload($request);
+        $order_id = $id;
+        $order = UserOrder::findOrFail($order_id);
+        $order->receipt_image = $upload_res->getData()->imagePath;
+        $order->save();
+
+        return response()->json([
+            'status' => 'success',
+            'path' => $order->receipt_image,
+        ]);
     }
 
     /**

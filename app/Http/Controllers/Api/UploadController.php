@@ -21,10 +21,10 @@ class UploadController extends Controller
         if ($validator->fails()) {
             return response()->json(["status" => 'fail', "error" => $validator->errors()->all()], 400);
         }
-        
-        $imageName = time().'.'.$request->image->extension();
+
+        $imageName = time() . '.' . $request->image->extension();
         $request->image->move(public_path('images'), $imageName);
-        $imagePath = 'images/'.$imageName;
+        $imagePath = 'images/' . $imageName;
 
         return response()->json([
             'status' => 'success',
