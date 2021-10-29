@@ -16,5 +16,6 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
         ItemSeeder::run();
         UserSeeder::run();
+        UserOrderSeeder::run();
     }
 }

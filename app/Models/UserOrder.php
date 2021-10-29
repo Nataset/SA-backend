@@ -14,6 +14,6 @@ class UserOrder extends Model
     }
     public function items()
     {
-        return $this->belongsToMany(Item::class, 'user_order_item')->withPivot('amount')->withTimestamps();
+        return $this->belongsToMany(Item::class, 'user_order_item')->withPivot('amount', 'total_item_price')->withTimestamps();
     }
 }

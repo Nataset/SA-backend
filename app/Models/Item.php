@@ -12,7 +12,7 @@ class Item extends Model
 
     public function userOrders()
     {
-        return $this->belongsToMany(UserOrder::class, 'user_order_item')->withPivot('amount')->withTimestamps();
+        return $this->belongsToMany(UserOrder::class, 'user_order_item')->withPivot('amount', 'total_item_price')->withTimestamps();
     }
     public function suppliers()
     {

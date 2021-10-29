@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\UserOrder;
 use App\Http\Controllers\Controller;
 
-class OrderController extends Controller
+class UserOrderController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -25,13 +25,28 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validated();
-        $order = new UserOrder();
-        $order->status = 'pending';
+        // $validated = $request->validated();
+        $order = new UserOrder;
         $order->user_id = $request->input('user_id');
-        // add loop for attach items to order
-
+        $order->total_order_price = $request->input('total_order_price');
+        $order->receipt_image = null;
+        $order->status = 'pending';
         $order->save();
+
+
+        // add loop for attach items to order
+        foreach ($request->input('item') as $x => $val) {
+            $total_item_price = $val['buyAmount'] * $val['price'];
+            $order->items()->attach($val['id'], [
+                'amount' => $val['buyAmount'],
+                'total_item_price' => $total_item_price
+            ]);
+        }
+        $order->save();
+        $order->items;
+        return $order;
+        // get order with items from user
+        // $user->find(2)->userOrders()->with('items')->get()
     }
 
     /**
@@ -62,7 +77,6 @@ class OrderController extends Controller
         $order = UserOrder::findOrFail($id);
         $order->status = $request->input('status');
         $order->save();
-
     }
 
     /**
