@@ -32,7 +32,6 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validated();
         $item = new Item();
         $item->name = $request->input('name');
         $item->amount = $request->input('amount');
@@ -88,7 +87,6 @@ class ItemController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validated = $request->validated();
         $item = Item::findOrFail($id);
         $item->name = $request->input('name');
         $item->amount = $request->input('amount');

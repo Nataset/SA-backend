@@ -26,7 +26,6 @@ class RestockOrderController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validated();
         $order = new RestockOrder();
         $order->status = 'pending';
         $order->supplier_id = $request->input('supplier_id');
@@ -60,8 +59,8 @@ class RestockOrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    
-     public function updateStatus(Request $request, $id)
+
+    public function updateStatus(Request $request, $id)
     {
         $order = RestockOrder::findOrFail($id);
         $order->status = $request->input('status');
