@@ -22,6 +22,7 @@ class ItemController extends Controller
     public function getItemById($id)
     {
         $item = Item::findOrFail($id);
+        $item->suppliers;
         return $item;
     }
     /**
