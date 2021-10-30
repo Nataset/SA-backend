@@ -37,16 +37,15 @@ class ItemController extends Controller
         $item->amount = $request->input('amount');
         $item->price = $request->input('price');
         $item->min_item = $request->input('min_item');
+        $item->image_path = $request->input('image');
         $item->save();
-        // $myrequest = new UploadController();
-        // $response = $myrequest->uploadBlock($request,  'backgroundImage', $item->id);
-        // $detail = new ItemDetail();
-        // $detail->item_id = $item->id;
-        // $detail->name = $response->getData()->image_name;
-        // $detail->image_path = $response->getData()->data;
-        // $detail->save();
 
-        session()->flash('message', $item->name . ' succesfully created');
+        foreach ($request->input('suppliers') as $key => $val) {
+            $item->suppliers()->attach($val['id']);
+        }
+        $item->save();
+        $item->suppliers;
+
         return $item;
     }
 

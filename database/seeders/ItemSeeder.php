@@ -14,13 +14,13 @@ class ItemSeeder extends Seeder
      */
     public function run()
     {
-       $item = new Item;
-       $item->name = "TEST";
-       $item->amount = 10;
-       $item->price = 200.50;
-       $item->min_item = 2;
-       $item->save();
+        //    $item = new Item;
+        //    $item->name = "TEST";
+        //    $item->amount = 10;
+        //    $item->price = 200.50;
+        //    $item->min_item = 2;
+        //    $item->save();
 
-       Item::factory()->count(10)->create();
+        Item::factory()->count(3)->create();
     }
 }

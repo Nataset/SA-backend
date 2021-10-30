@@ -17,5 +17,6 @@ class DatabaseSeeder extends Seeder
         ItemSeeder::run();
         UserSeeder::run();
         UserOrderSeeder::run();
+        SupplierSeeder::run();
     }
 }

@@ -124,6 +124,7 @@ class UserOrderController extends Controller
         }
 
         $upload = new UploadController();
+        return $request;
         $upload_res = $upload->upload($request);
         $order_id = $id;
         $order = UserOrder::findOrFail($order_id);
