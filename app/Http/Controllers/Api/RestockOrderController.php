@@ -75,6 +75,13 @@ class RestockOrderController extends Controller
         $order = RestockOrder::findOrFail($id);
         $order->status = $request->input('status');
         $order->save();
+        $order->items[0]->amount += $order->items[0]->pivot->amount;
+        $order->items[0]->save();
+        $order->items;
+        return response()->json([
+            "status" => 'success',
+            "data" => $order
+        ]);
     }
 
     /**
