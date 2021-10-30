@@ -128,6 +128,7 @@ class UserOrderController extends Controller
         $order_id = $id;
         $order = UserOrder::findOrFail($order_id);
         $order->receipt_image = $upload_res->getData()->imagePath;
+        $order->status = 'confirm';
         $order->save();
 
         return response()->json([

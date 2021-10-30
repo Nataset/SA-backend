@@ -93,19 +93,12 @@ class ItemController extends Controller
         $item->price = $request->input('price');
         $item->min_item = $request->input('min_item');
         $item->save();
-        // foreach ($request->files as $key => $value) {
-        //     # code...
-        //     $upload = new UploadController();
-        //     $res = $upload->uploadBlock($request, $key, $id);
-        //     foreach ($item->itemDetails as $k => $v) {
-        //         # code...
-        //         if ($v->name === $key) {
-        //             $v->image_path = $res->getData()->data;
-        //             $v->save();
-        //             break;
-        //         }
-        //     }
-        // }
+
+        $item->suppliers()->detach();
+        foreach ($request->input('selectSuppliers') as $val) {
+            $item->suppliers()->attach($val['id']);
+        }
+        $item->save();
 
         return $item;
     }
