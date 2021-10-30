@@ -40,7 +40,7 @@ Route::post('suppliers/add', [\App\Http\Controllers\Api\SupplierController::clas
 Route::post('uploadImage', [\App\Http\Controllers\Api\UploadController::class, 'upload']);
 
 Route::post('restock/add', [\App\Http\Controllers\Api\RestockOrderController::class, 'store']);
-Route::get('restock', [\App\Http\Controllers\Api\RestockOrderController::class, 'showRestockOrder']);
+Route::post('restock', [\App\Http\Controllers\Api\RestockOrderController::class, 'showRestockOrder']);
 Route::put('restock/status/{id}', [\App\Http\Controllers\Api\RestockOrderController::class, 'updateStatus']);
 
 Route::group([

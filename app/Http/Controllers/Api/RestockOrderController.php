@@ -29,8 +29,18 @@ class RestockOrderController extends Controller
         $order = new RestockOrder();
         $order->status = 'pending';
         $order->supplier_id = $request->input('supplier_id');
-        // add loop for attach items to order
+        $order->ship_price = $request->input('ship_price');
+        $order->total_restock_price = $request->input('total_restock_price');
         $order->save();
+
+        $order->items()->attach($request->input('item_id'), [
+            'amount' => $request->input('buyAmount'),
+            'buyPrice' => $request->input('buyPrice'),
+            'total_item_price' => $request->input('total_item_price')
+        ]);
+        $order->save();
+        $order->items;
+        return $order;
     }
 
     /**

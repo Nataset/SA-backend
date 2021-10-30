@@ -16,6 +16,7 @@ class CreateRestockOrdersTable extends Migration
         Schema::create('restock_orders', function (Blueprint $table) {
             $table->id();
             $table->float('total_restock_price');
+            $table->float('ship_price');
             $table->enum('status', ['pending', 'finished']);
             $table->unsignedBigInteger('supplier_id');
             $table->foreign('supplier_id')->references('id')->on('suppliers');

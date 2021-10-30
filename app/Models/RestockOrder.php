@@ -15,6 +15,6 @@ class RestockOrder extends Model
     }
     public function items()
     {
-        return $this->belongsToMany(Item::class, 'restock_order_item')->withPivot('amount', 'total_item_price')->withTimestamps();
+        return $this->belongsToMany(Item::class, 'restock_order_item')->withPivot('amount', 'buyPrice', 'total_item_price')->withTimestamps();
     }
 }

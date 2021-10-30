@@ -16,6 +16,7 @@ class CreateRestockOrderItemTable extends Migration
         Schema::create('restock_order_item', function (Blueprint $table) {
             $table->id();
             $table->integer('amount');
+            $table->float('buyPrice');
             $table->float('total_item_price');
             $table->unsignedBigInteger('item_id');
             $table->unsignedBigInteger('restock_order_id');
